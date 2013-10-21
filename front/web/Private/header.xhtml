@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <p:layoutUnit position="north" size="100">       
+        <h:graphicImage value="/Imagenes/logo.png" />
+        <p:outputLabel value="Hola #{nombreUsuario}!" rendered="#{not empty nombreUsuario}"></p:outputLabel>          
+    </p:layoutUnit>  
+
+    <p:layoutUnit position="east" size="220">  
+        <h:form>
+            <p:menu style="width: 200px">
+
+                <p:submenu label="Menú">
+                    <p:submenu label="Mi Cuenta" rendered="#{not empty nombreUsuario}">
+                        <p:menuitem ajax="false" value="Mis Datos" icon="ui-icon-person" action="#{usuarios.obtenerMisDatos}" />
+                        <p:menuitem ajax="false" value="Mis Compras" icon="ui-icon-cart" />         
+                        <p:menuitem ajax="false" value="Imprimir Cupón" icon="ui-icon-print"/>         
+                        <p:menuitem ajax="false" value="Logout" icon="ui-icon-power" action="#{login.logout}"/>         
+                    </p:submenu>
+                    <p:menuitem ajax="false" value="Inicio" icon="ui-icon-home" url="/index.xhtml" />
+                    <p:menuitem ajax="false" value="Login" icon="ui-icon-key" url="/login.xhtml" rendered="#{empty nombreUsuario}" />
+                    <p:menuitem ajax="false" value="Registrarse" icon="ui-icon-contact" url="/registro.xhtml" rendered="#{empty nombreUsuario}" />         
+                    <p:menuitem ajax="false" value=" " icon="ui-icon-mail-closed" />      
+                    <p:menuitem icon="ui-icon-mail-closed" value=" " > 
+                        <p:commandLink id="modalDialogMailButton"  value="Recomendar a un amigo" onclick="dlgMail.show();" type="button"/>  
+                    </p:menuitem>
+                </p:submenu>
+            </p:menu>
+        </h:form>
+        <p:dialog id="modalDialogMail" header="Recomendar" widgetVar="dlgMail"  modal="true" appendToBody="true" height="300" >  
+            <h:form prependId="false">
+                <div>
+
+                    <h3>Recomienda el Oferton por email</h3>
+                    <br />
+                    Ingresa el email de tu amigo y le enviaremos el mail <br />
+                    <br />
+                    <br />
+                    <p>email: <h:inputText value="#{mail.mailTo}" /></p>
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <h:commandLink class="btn btn-info" action="#{mail.sendEmail()}" value="Enviar" onclick="dlgMail.hide();" />
+                </div>
+            </h:form>
+        </p:dialog>  
+    </p:layoutUnit>
+
+
+</ui:composition>

@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/Private/layout.xhtml">
+
+    <ui:define name ="title">Login</ui:define>
+
+    <ui:define name ="header"><ui:include src="/Private/header.xhtml"/></ui:define>
+
+    <ui:define name ="body">     
+        <p:layoutUnit position="center">            
+            <p:spacer></p:spacer>            
+            <h:form id="loginForm">          
+                <p:messages id="msg" showDetail="false" closable="true"/>
+                <p:panel header="Login" style="width: 600px" >
+
+                    <h:panelGrid id="loginPanel" columns="3">
+
+                        <h:outputText value="Nombre usuario " />
+                        <p:inputText required="true" id="nombreUsuario" value="#{login.nombreUsuario}" 
+                                     requiredMessage="Debe ingresar un nombre de usuario."></p:inputText>                      
+                        <p:spacer></p:spacer>
+
+                        <h:outputText value="Contraseña " />
+                        <p:password required="true" id="contrasenia" 
+                                    value="#{login.contrasenia}" feedback="false" 
+                                    requiredMessage="Debe ingresar una contraseña." ></p:password>
+                        <p:spacer></p:spacer>
+
+                    </h:panelGrid>
+
+                    <p:commandButton id="loginButton" value="Login" 
+                                     actionListener="#{login.login}"   
+                                     oncomplete="handleLoginRequest(xhr, status, args)" update="msg"/>  
+                </p:panel>
+            </h:form>
+
+            <script type="text/javascript">
+                //<![CDATA[
+                function handleLoginRequest(xhr, status, args) {
+                    if (args.loginValido) {
+                        window.location = args.urlRedireccion;
+                    }
+                }
+                //]]>
+            </script>  
+
+        </p:layoutUnit>  
+    </ui:define>
+
+    <ui:define name ="footer"><ui:include src="/Private/footer.xhtml"/></ui:define>
+
+</ui:composition>
