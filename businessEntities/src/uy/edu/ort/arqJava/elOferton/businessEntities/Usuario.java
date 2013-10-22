@@ -21,6 +21,10 @@ public class Usuario {
 
     public Usuario() {
     }
+    
+    public Usuario(long id) {
+        this.id = id;
+    }
 
     public Usuario(long id, String nombreUsuario, String contrasenia, String nombre,
             String email, String direccion, String apellido, String telefono) {

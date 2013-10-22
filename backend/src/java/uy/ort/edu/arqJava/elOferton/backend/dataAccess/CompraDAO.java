@@ -10,7 +10,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Compra;
-import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 
 /**
  *
@@ -24,6 +23,9 @@ public class CompraDAO implements ICompraDAO {
 
     @Override
     public void save(Compra entity) throws DatosException {
+        if(entity.getId() == 0){
+            entity.setId(Repositorio.getDBId());
+        }
         Repositorio.getInscatnce().getCompras().add(entity);
     }
 
@@ -52,7 +54,7 @@ public class CompraDAO implements ICompraDAO {
 
             while (iter.hasNext()) {
                 Compra c = iter.next();
-                if (c.getIdUsuario() == (long) val) {
+                if (c.getUsuario().getId() == (long) val) {
                     listaCompras.add(c);
                 }
             }

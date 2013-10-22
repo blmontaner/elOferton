@@ -21,6 +21,10 @@ public class Oferta {
 
     public Oferta() {
     }
+    
+    public Oferta(long id) {
+        this.id = id;
+    }
 
     public Oferta(long id, String nombre, String descripcion, double precio, Empresa empresa) {
         this.id = id;

@@ -22,6 +22,10 @@ public class Empresa {
     public Empresa() {
     }
 
+    public Empresa(long id) {
+        this.id = id;
+    }
+    
     public Empresa(long id, String nombre, String telefono, String direccion, String email) {
         this.id = id;
         if (nombre != null) {

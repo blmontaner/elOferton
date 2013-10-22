@@ -15,19 +15,19 @@ public class Compra {
 
     private Date fecha;
     private long id;
-    private long idUsuario;
-    private long idOferta;
+    private Usuario usuario;
+    private Oferta oferta;
 
-    public Compra(Date fecha, long idUsuario, long idOferta) {
+    public Compra(Date fecha, Usuario usuario, Oferta oferta) {
         this.fecha = fecha;
-        this.idUsuario = idUsuario;
-        this.idOferta = idOferta;
+        this.usuario = usuario;
+        this.oferta = oferta;
     }
 
-    public Compra(Date fecha, long idUsuario, long idOferta, long id) {
+    public Compra(Date fecha, Usuario usuario, Oferta oferta, long id) {
         this.fecha = fecha;
-        this.idUsuario = idUsuario;
-        this.idOferta = idOferta;
+        this.usuario = usuario;
+        this.oferta = oferta;
         this.id = id;
     }
 
@@ -47,28 +47,26 @@ public class Compra {
         this.fecha = fecha;
     }
 
-    public long getIdUsuario() {
-        return idUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setIdUsuario(long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public long getIdOferta() {
-        return idOferta;
+    public Oferta getOferta() {
+        return this.oferta;
     }
 
-    public void setIdOferta(long idOferta) {
-        this.idOferta = idOferta;
+    public void setOferta(Oferta oferta) {
+        this.oferta = oferta;
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 79 * hash + Objects.hashCode(this.fecha);
-        hash = 79 * hash + (int) (this.idUsuario ^ (this.idUsuario >>> 32));
-        hash = 79 * hash + (int) (this.idOferta ^ (this.idOferta >>> 32));
         return hash;
     }
 
@@ -84,17 +82,13 @@ public class Compra {
         if (!Objects.equals(this.fecha, other.fecha)) {
             return false;
         }
-        if (this.idUsuario != other.idUsuario) {
+        if (this.usuario.getId() != other.usuario.getId()) {
             return false;
         }
-        if (this.idOferta != other.idOferta) {
+        if (this.oferta.getId() != other.oferta.getId()) {
             return false;
         }
-
-        return (other.getIdOferta() == this.getIdOferta()
-                && other.getIdUsuario() == this.getIdUsuario()
-                && other.getFecha().equals(this.getFecha()))
-                || other.getId() == this.getId();
+        return false;
     }
 
     @Override
@@ -102,8 +96,8 @@ public class Compra {
 
         String xml = "<Compra>";
         xml += "<Id>" + getId() + "</Id>";
-        xml += "<IdOferta>" + getIdOferta() + "</IdOferta>";
-        xml += "<IdUsuario>" + getIdUsuario() + "</IdUsuario>";
+        xml += "<IdOferta>" + this.oferta.getId() + "</IdOferta>";
+        xml += "<IdUsuario>" + this.usuario.getId() + "</IdUsuario>";
         xml += "<Fecha>" + getFecha() + "</Fecha>";
         xml += "</Compra>";
 

@@ -9,9 +9,10 @@ import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import org.apache.log4j.Logger;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Compra;
+import uy.edu.ort.arqJava.elOferton.businessEntities.Empresa;
+import uy.edu.ort.arqJava.elOferton.businessEntities.Oferta;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 import uy.ort.edu.arqJava.elOferton.backend.businessLogic.utils.InputValidations;
 import uy.ort.edu.arqJava.elOferton.backend.dataAccess.DatosException;
@@ -132,12 +133,12 @@ public class BusinessLogicFacade implements IBusinessLogicFacade {
     }
 
     @Override
-    public void registrarCompra(long idUsuario, long idOferta) throws NegocioException {
+    public void registrarCompra(long idUsuario, long idOferta, String nombreOferta,double precio, long idEmpresa) throws NegocioException {
 
         //Aca deberia verificar que existe el id de la compra ya que viene desde el fron (puede ser manipulado)
         //El id de usuario se guarda en la sesion asi que en principio no habria como cambiarlo
 
-        Compra compra = new Compra(new Date(), idUsuario, idOferta);
+        Compra compra = new Compra(new Date(), new Usuario(idUsuario),new Oferta(idOferta,nombreOferta,"",precio,new Empresa(idEmpresa)));
 
         try {
             _daoCompras.save(compra);

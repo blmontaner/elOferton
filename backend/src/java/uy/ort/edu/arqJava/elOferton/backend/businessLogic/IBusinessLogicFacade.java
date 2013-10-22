@@ -27,7 +27,7 @@ public interface IBusinessLogicFacade {
 
     void actualizarDatosUsuario(Usuario usuario) throws NegocioException;
 
-    void registrarCompra(long idUsuario, long idOferta) throws NegocioException;
+    void registrarCompra(long idUsuario, long idOferta, String nombreOferta,double precio, long idEmpresa) throws NegocioException;
 
     List<Compra> obtenerComprasPorUsuario(long idUsuario) throws NegocioException;
     

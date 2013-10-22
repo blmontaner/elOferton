@@ -17,15 +17,15 @@
                 <p:submenu label="Menú">
                     <p:submenu label="Mi Cuenta" rendered="#{not empty nombreUsuario}">
                         <p:menuitem ajax="false" value="Mis Datos" icon="ui-icon-person" action="#{usuarios.obtenerMisDatos}" />
-                        <p:menuitem ajax="false" value="Mis Compras" icon="ui-icon-cart" />         
+                        <p:menuitem ajax="false" value="Mis Compras" icon="ui-icon-cart" url="/misCompras.xhtml" />         
                         <p:menuitem ajax="false" value="Imprimir Cupón" icon="ui-icon-print"/>         
                         <p:menuitem ajax="false" value="Logout" icon="ui-icon-power" action="#{login.logout}"/>         
                     </p:submenu>
                     <p:menuitem ajax="false" value="Inicio" icon="ui-icon-home" url="/index.xhtml" />
                     <p:menuitem ajax="false" value="Login" icon="ui-icon-key" url="/login.xhtml" rendered="#{empty nombreUsuario}" />
                     <p:menuitem ajax="false" value="Registrarse" icon="ui-icon-contact" url="/registro.xhtml" rendered="#{empty nombreUsuario}" />         
-                    <p:menuitem ajax="false" value=" " icon="ui-icon-mail-closed" />      
-                    <p:menuitem icon="ui-icon-mail-closed" value=" " > 
+                    <!--<p:menuitem ajax="false" value=" " icon="ui-icon-mail-closed" />-->      
+                    <p:menuitem ajax="false" icon="ui-icon-mail-closed" value=" " > 
                         <p:commandLink id="modalDialogMailButton"  value="Recomendar a un amigo" onclick="dlgMail.show();" type="button"/>  
                     </p:menuitem>
                 </p:submenu>

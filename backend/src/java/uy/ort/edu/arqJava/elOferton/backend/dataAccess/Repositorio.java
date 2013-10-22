@@ -23,6 +23,11 @@ public class Repositorio {
     private List<Oferta> ofertas;
     private List<Empresa> empresas;
     private List<Compra> compras;
+    private static long id = 1000;
+    
+    public static long getDBId(){
+        return ++id;
+    }
 
     public List<Usuario> getUsuarios() {
         return usuarios;
@@ -105,21 +110,21 @@ public class Repositorio {
     private List<Compra> ComprasPrueba() {
         List<Compra> l = new ArrayList<Compra>();
 
-        Compra c1 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c2 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c3 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c4 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c5 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c6 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c7 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c8 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c9 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c10 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c11 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c12 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c13 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c14 = new Compra(new Date(2013, 10, 17), 1, 1);
-        Compra c15 = new Compra(new Date(2013, 10, 17), 1, 1);
+        Compra c1 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c2 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c3 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c4 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c5 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c6 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c7 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c8 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c9 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c10 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c11 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c12 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c13 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c14 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c15 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
 
         l.add(c1);
         l.add(c2);

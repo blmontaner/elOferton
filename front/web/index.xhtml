@@ -20,7 +20,8 @@
                             <div style="float:right; margin:-20px ;padding:5px'" class="alert alert-success"><h:outputText   value="Precio $#{oferta.precio}" /></div>
                             <div><h2><h:outputText style="text-align: left;color: #009ddc;margin-bottom: 5px;padding: 0 0 5px 0;text-transform: uppercase;font-size: 24px;" value="#{oferta.nombre}" /></h2></div>
                             <p style="text-align: left;"><h:outputText  value="#{oferta.descripcion}" /> </p>
-                            <p style="text-align: left; border: 1px solid #AAA;float: left;border-radius: 3px;padding: 3px 23px;box-shadow:2px 2px 5px #888888;"> <h:outputText value="Comprar" /> </p>
+                            <p style="text-align: left; float: left;padding: 3px 23px;"> 
+                            <h:outputLink rendered="#{not empty nombreUsuario}" class="btn" value="#{compras.realizarCompra(oferta.id,oferta.nombre,oferta.precio,oferta.empresa.id)}"> Comprar </h:outputLink></p>
                             <p style="text-align: right;float: right; font-weight:  bold">
                                 <p:commandLink id="modalDialogButton" value="#{oferta.empresa.nombre}" onclick="dlgEmpresa#{oferta.empresa.id}.show();" type="button"/>  
                             </p>
@@ -38,7 +39,4 @@
             </ui:insert>
         </p:layoutUnit>  
     </ui:define>
-
-    <ui:define name ="footer"><ui:include src="/Private/footer.xhtml"/></ui:define>
-
 </ui:composition>
