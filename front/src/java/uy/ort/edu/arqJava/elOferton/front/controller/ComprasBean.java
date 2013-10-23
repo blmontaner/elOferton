@@ -7,10 +7,10 @@ package uy.ort.edu.arqJava.elOferton.front.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import org.apache.log4j.Logger;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Compra;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Oferta;
 import uy.ort.edu.arqJava.elOferton.backend.businessLogic.IBusinessLogicFacade;
@@ -27,31 +27,36 @@ public class ComprasBean {
 
     @EJB
     private IBusinessLogicFacade _bl;
-    
     private List<Compra> listaCompras;
-    
+    private final Logger _logger = Logger.getLogger(getClass());
+
     public ComprasBean() {
         listaCompras = new ArrayList<>();
     }
-    
-    public void realizarCompra(long idOferta, String nombreOferta,double precio,long idEmpresa){
+
+    public void realizarCompra(Oferta oferta) {
+        _logger.info("El usuario " + Utils.getNombreUsuarioLogueado() + " realizó una compra de la oferta " + oferta.getNombre());
         try {
             long idUsuario = Long.parseLong(Utils.getIdUsuarioLogueado());
-            _bl.registrarCompra(idUsuario, idOferta, nombreOferta,precio,idEmpresa);
+            _bl.registrarCompra(idUsuario, oferta.getId(), oferta.getNombre(),oferta.getPrecio(),oferta.getEmpresa().getId());
         } catch (NegocioException ex) {
-            Logger.getLogger(OfertasBean.class.getName()).log(Level.SEVERE, null, ex);
+            _logger.error("Ocurrió un error al realizar una compra.\n[EXCEPTION] " + ex.getStackTrace());
+        } catch (Exception ex) {
+            _logger.error("Ocurrió un error al realizar una compra.\n[EXCEPTION] " + ex.getStackTrace());
         }
     }
     
-    public List<Compra> getListaCompras(){
+    public List<Compra> getListaCompras() {
+        _logger.info("Se obtiene la lista de compras del usuario " + Utils.getNombreUsuarioLogueado());
         listaCompras = new ArrayList<>();
         try {
             long idUsuario = Long.parseLong(Utils.getIdUsuarioLogueado());
             listaCompras = _bl.obtenerComprasPorUsuario(idUsuario);
         } catch (NegocioException ex) {
-            Logger.getLogger(OfertasBean.class.getName()).log(Level.SEVERE, null, ex);
+            _logger.error("Ocurrió un error al intentar obtener la lista de compras de un usuario.\n[EXCEPTION] " + ex.getStackTrace());
+        } catch (Exception ex) {
+            _logger.error("Ocurrió un error al intentar obtener la lista de compras de un usuario.\n[EXCEPTION] " + ex.getStackTrace());
         }
         return listaCompras;
     }
-    
 }

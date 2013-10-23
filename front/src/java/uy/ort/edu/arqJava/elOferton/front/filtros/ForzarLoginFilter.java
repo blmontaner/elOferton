@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 public class ForzarLoginFilter implements Filter{
     
      private static final String PAGINA_LOGIN = "login.xhtml";
+     private static final String PAGINA_INDEX = "index.xhtml";
 
     public ForzarLoginFilter() {
     }
@@ -44,27 +45,34 @@ public class ForzarLoginFilter implements Filter{
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
+        if(necesitaRedireccion((HttpServletRequest) request)){
 
-        boolean estaLogueado = chequearEstadoLogin(request, response);
+            boolean estaLogueado = chequearEstadoLogin(request, response);
 
-        if (esRedireccion((HttpServletRequest) request) && !estaLogueado) {
+            if (esRedireccion((HttpServletRequest) request) && !estaLogueado) {
 
-            String loginURI = PAGINA_LOGIN;
+                String loginURI = PAGINA_LOGIN;
 
-            RequestDispatcher requestDispatcher = request
-                    .getRequestDispatcher(loginURI);
+                RequestDispatcher requestDispatcher = request
+                        .getRequestDispatcher(loginURI);
 
-            requestDispatcher.forward(request, response);
+                requestDispatcher.forward(request, response);
 
-            //((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath() + "http://localhost/front/index.xhtml");
-                       
-        } else {
-            try {
-                chain.doFilter(request, response);
-            } catch (Throwable t) {
-                System.out.println(t.getMessage());
+                //((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath() + "http://localhost/front/index.xhtml");
+
+            } else {
+                try {
+                    chain.doFilter(request, response);
+                } catch (Throwable t) {
+                    System.out.println(t.getMessage());
+                }
             }
         }
+    }
+    
+    private boolean necesitaRedireccion(HttpServletRequest request){
+        String requestURI = request.getRequestURI();
+        return !(requestURI.contains(PAGINA_INDEX) || requestURI.contains(PAGINA_LOGIN) || requestURI.isEmpty());
     }
 
     private boolean esRedireccion(HttpServletRequest request) {

@@ -6,7 +6,7 @@
 
 
     <p:layoutUnit position="north" size="100">       
-        <h:graphicImage value="/Imagenes/logo.png" />
+        <h:graphicImage value="resources/img/logo.png" />
         <p:outputLabel value="Hola #{nombreUsuario}!" rendered="#{not empty nombreUsuario}"></p:outputLabel>          
     </p:layoutUnit>  
 
@@ -18,36 +18,55 @@
                     <p:submenu label="Mi Cuenta" rendered="#{not empty nombreUsuario}">
                         <p:menuitem ajax="false" value="Mis Datos" icon="ui-icon-person" action="#{usuarios.obtenerMisDatos}" />
                         <p:menuitem ajax="false" value="Mis Compras" icon="ui-icon-cart" url="/misCompras.xhtml" />         
-                        <p:menuitem ajax="false" value="Imprimir Cupón" icon="ui-icon-print"/>         
                         <p:menuitem ajax="false" value="Logout" icon="ui-icon-power" action="#{login.logout}"/>         
                     </p:submenu>
                     <p:menuitem ajax="false" value="Inicio" icon="ui-icon-home" url="/index.xhtml" />
                     <p:menuitem ajax="false" value="Login" icon="ui-icon-key" url="/login.xhtml" rendered="#{empty nombreUsuario}" />
                     <p:menuitem ajax="false" value="Registrarse" icon="ui-icon-contact" url="/registro.xhtml" rendered="#{empty nombreUsuario}" />         
-                    <!--<p:menuitem ajax="false" value=" " icon="ui-icon-mail-closed" />-->      
-                    <p:menuitem ajax="false" icon="ui-icon-mail-closed" value=" " > 
-                        <p:commandLink id="modalDialogMailButton"  value="Recomendar a un amigo" onclick="dlgMail.show();" type="button"/>  
-                    </p:menuitem>
+                    <p:menuitem ajax="true" icon="ui-icon-mail-closed" value="Recomendar a un amigo" id="modalDialogMailButton" onclick="dlgMail.show();"/> 
                 </p:submenu>
             </p:menu>
         </h:form>
-        <p:dialog id="modalDialogMail" header="Recomendar" widgetVar="dlgMail"  modal="true" appendToBody="true" height="300" >  
-            <h:form prependId="false">
-                <div>
 
-                    <h3>Recomienda el Oferton por email</h3>
-                    <br />
-                    Ingresa el email de tu amigo y le enviaremos el mail <br />
-                    <br />
-                    <br />
-                    <p>email: <h:inputText value="#{mail.mailTo}" /></p>
-                    <br />
-                </div>
-                <div class="modal-footer">
-                    <h:commandLink class="btn btn-info" action="#{mail.sendEmail()}" value="Enviar" onclick="dlgMail.hide();" />
-                </div>
+        <p:dialog id="modalDialogMail" header="Recomendar" widgetVar="dlgMail"  modal="true" appendToBody="true" >
+
+            <h:form prependId="false">
+                <p:panel id="panel">
+                    <div>
+                        <p:messages id="msg" showDetail="false" closable="true"/>
+                        <h3>Recomienda el Oferton por email</h3>
+                        <br />
+                        Ingresa el email de tu amigo y le enviaremos el mail <br />
+                        <br />
+                        <br />
+                        <p>email:
+                            <p:inputText id="email" value="#{mail.mailTo}" required="true" 
+                                         requiredMessage="Debe ingresar un email."
+                                         validatorMessage="Formato de email no válido.">
+                                <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"></f:validateRegex>   
+                            </p:inputText>  
+                        </p>
+                        <br />
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandButton value="Enviar" actionListener="#{mail.sendEmail}" id="enviarMail" update="msg"  >  
+                            <f:ajax execute="panel" render="panel" />  
+                        </p:commandButton> 
+                         
+                    </div>
+                </p:panel>
             </h:form>
+            <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px" id="emailSentStatus" >  
+                <f:facet name="start">  
+                    <p:graphicImage value="resources/img/loading.gif" />  
+                </f:facet>  
+                <f:facet name="complete">  
+                    Enviado
+                </f:facet>  
+                 <f:facet name="error">An error has occurred! <p:graphicImage value="resources/img/mailError.ico" /> </f:facet>
+            </p:ajaxStatus> 
         </p:dialog>  
+
     </p:layoutUnit>
 
 

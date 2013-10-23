@@ -6,16 +6,12 @@ package uy.ort.edu.arqJava.elOferton.front.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import uy.edu.ort.arqJava.elOferton.businessEntities.ListaOfertas;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Oferta;
-import uy.ort.edu.arqJava.elOferton.backend.businessLogic.IBusinessLogicFacade;
-import uy.ort.edu.arqJava.elOferton.backend.businessLogic.NegocioException;
-import uy.ort.edu.arqJava.elOferton.front.utils.Utils;
 import uy.ort.edu.arqJava.elOferton.front.webserviceclient.OfertasServiceClient;
 
 /**
@@ -23,29 +19,38 @@ import uy.ort.edu.arqJava.elOferton.front.webserviceclient.OfertasServiceClient;
  * @author Bruno
  */
 @ManagedBean(name = "ofertas")
-@RequestScoped
+@SessionScoped
 public class OfertasBean {
 
-    @EJB
-    private IBusinessLogicFacade _bl;
-    
-    private List<Oferta> listaOfertas;
-    
+    private static List<Oferta> listaOfertas;
+    private final org.apache.log4j.Logger _logger = org.apache.log4j.Logger.getLogger(getClass());
+
     public OfertasBean() {
-        listaOfertas = new ArrayList<Oferta>();
+        listaOfertas = new ArrayList<>();
     }
 
     public List<Oferta> getOfertasDia() {
-        OfertasServiceClient cliente = new OfertasServiceClient();
-        ListaOfertas listaO = null;
-        try {
-            listaO = cliente.getJson(ListaOfertas.class);
-            
-        } catch (Exception ex) {
-           // throw new ComunicacionException(ex, "Ocurrio un error al intentar comunicarse con el servicio.");
-        } finally {
-           // cliente.close();
-        };
-        return listaO.getOfertas();
+        if (listaOfertas == null || listaOfertas.size() == 0) {
+            OfertasServiceClient cliente = new OfertasServiceClient();
+            ListaOfertas listaO = null;
+            try {
+                 _logger.info("Se obtienen las ofertas del día del servicio externo");
+                listaO = cliente.getJson(ListaOfertas.class);
+                listaOfertas = listaO.getOfertas();
+            } catch (Exception ex) {
+                _logger.error("Ocurrió un error al intentar obtener la lista de ofertas.\n[EXCEPTION] " + ex.getStackTrace());
+
+                listaO = new ListaOfertas();
+                listaO.setOfertas(new ArrayList<Oferta>());
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN,
+                        "Ocurrió un error al obtener las ofertas del día. Por favor visitenos mas tarde.",
+                        null));
+            } finally {
+                cliente.close();
+            };
+
+        }
+        return listaOfertas;
     }
 }

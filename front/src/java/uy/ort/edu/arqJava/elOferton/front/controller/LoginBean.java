@@ -4,7 +4,6 @@
  */
 package uy.ort.edu.arqJava.elOferton.front.controller;
 
-import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -12,10 +11,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 import uy.ort.edu.arqJava.elOferton.backend.businessLogic.IBusinessLogicFacade;
 import uy.ort.edu.arqJava.elOferton.backend.businessLogic.NegocioException;
+import uy.ort.edu.arqJava.elOferton.front.utils.Configuracion;
 import uy.ort.edu.arqJava.elOferton.front.utils.Utils;
 
 /**
@@ -30,6 +31,7 @@ public class LoginBean implements Serializable {
     private String nombreUsuario;
     @EJB
     private IBusinessLogicFacade _bl;
+    private final Logger _logger = Logger.getLogger(getClass());
 
     public LoginBean() {
     }
@@ -52,15 +54,19 @@ public class LoginBean implements Serializable {
 
     public void login() {
 
+        _logger.info("Se intenta iniciar sesión en el sistema con el usuario " + this.nombreUsuario);
+
         Usuario usuario = null;
         boolean loginValido = false;
 
         //Pasar esto a .properties
-        String urlRedireccion = "http://localhost" + ":" + Utils.getRequest().getLocalPort() + Utils.getRequest().getContextPath();
+        String urlRedireccion = Configuracion.getInstancia().getPropiedad("urlRedireccionLogin");;
 
         try {
             usuario = _bl.validarLogin(nombreUsuario, contrasenia);
             loginValido = true;
+
+            _logger.info("El usuario " + this.nombreUsuario + " inicia sesión en el sistema");
 
             HttpSession session = Utils.getSession(true);
             session.setAttribute("nombreUsuario", usuario.getNombreUsuario());
@@ -74,10 +80,15 @@ public class LoginBean implements Serializable {
                     new FacesMessage(FacesMessage.SEVERITY_WARN,
                     ex.getLocalizedMessage(),
                     null));
+            _logger.error("Ocurrió un error al intentar iniciar sesión en el sistema.\n[EXCEPTION] " + ex.getStackTrace());
+        } catch (Exception ex) {
+            _logger.error("Ocurrió un error al intentar iniciar sesión en el sistema.\n[EXCEPTION] " + ex.getStackTrace());
         }
     }
 
     public String logout() {
+        _logger.info("El usuario " + Utils.getNombreUsuarioLogueado() + " cierra sesión en el sistema.");
+        
         HttpSession session = Utils.getSession(false);
         session.setAttribute("nombreUsuario", null);
         session.setAttribute("idUsuario", null);

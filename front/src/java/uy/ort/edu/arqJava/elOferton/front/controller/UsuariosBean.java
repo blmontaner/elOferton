@@ -14,6 +14,7 @@ import org.primefaces.context.RequestContext;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 import uy.ort.edu.arqJava.elOferton.backend.businessLogic.IBusinessLogicFacade;
 import uy.ort.edu.arqJava.elOferton.backend.businessLogic.NegocioException;
+import uy.ort.edu.arqJava.elOferton.front.utils.Configuracion;
 import uy.ort.edu.arqJava.elOferton.front.utils.Utils;
 
 /**
@@ -34,6 +35,7 @@ public class UsuariosBean {
     private String direccion;
     private String email;
     private String telefono;
+    private final org.apache.log4j.Logger _logger = org.apache.log4j.Logger.getLogger(getClass());
 
     public UsuariosBean() {
     }
@@ -103,6 +105,7 @@ public class UsuariosBean {
     }
 
     public String obtenerMisDatos() {
+        _logger.info("El usuario " + Utils.getNombreUsuarioLogueado() + " ingresa a la sección Mis Datos.");
         try {
             Usuario u = _bl.obtenerUsuario(Long.parseLong(Utils.getIdUsuarioLogueado()));
 
@@ -116,11 +119,16 @@ public class UsuariosBean {
 
             return "/Private/misDatos.xhtml";
         } catch (NegocioException ex) {
-            return null;
+            _logger.error("Ocurrió un error al intentar obtener los datos de un usuario.\n[EXCEPTION] " + ex.getStackTrace());
+        } catch (Exception ex) {
+            _logger.error("Ocurrió un error al intentar obtener los datos de un usuario.\n[EXCEPTION] " + ex.getStackTrace());
         }
+        return null;
     }
 
     public void actualizarMisDatos() {
+
+        _logger.info("El usuario " + Utils.getNombreUsuarioLogueado() + " actualiza sus datos.");
 
         Usuario u = new Usuario(Long.parseLong(Utils.getIdUsuarioLogueado()),
                 Utils.getNombreUsuarioLogueado(), contrasenia, nombre,
@@ -139,15 +147,20 @@ public class UsuariosBean {
                     new FacesMessage(FacesMessage.SEVERITY_WARN,
                     ex.getLocalizedMessage(),
                     null));
+            _logger.error("Ocurrió un error al intentar actualizar los datos de un usuario.\n[EXCEPTION] " + ex.getStackTrace());
+        } catch (Exception ex) {
+            _logger.error("Ocurrió un error al intentar actualizar los datos de un usuario.\n[EXCEPTION] " + ex.getStackTrace());
         }
     }
 
     public void registrarUsuario() {
 
+        _logger.info("Se intenta registrar el usuario " + this.nombreUsuario);
+
         boolean registroExitoso = false;
 
         //Sacar esto de .properties
-        String urlRedireccion = "http://localhost" + ":" + Utils.getRequest().getLocalPort() + Utils.getRequest().getContextPath();
+        String urlRedireccion = Configuracion.getInstancia().getPropiedad("urlRedireccionRegUsuarioExitoso");
 
         Usuario u = new Usuario(nombreUsuario, contrasenia, nombre,
                 email, direccion, apellido, telefono);
@@ -172,6 +185,9 @@ public class UsuariosBean {
                     new FacesMessage(FacesMessage.SEVERITY_WARN,
                     ex.getLocalizedMessage(),
                     null));
+            _logger.error("Ocurrió un error al intentar registrar un usuario.\n[EXCEPTION] " + ex.getStackTrace());
+        } catch (Exception ex) {
+            _logger.error("Ocurrió un error al intentar registrar un usuario.\n[EXCEPTION] " + ex.getStackTrace());
         }
     }
 }

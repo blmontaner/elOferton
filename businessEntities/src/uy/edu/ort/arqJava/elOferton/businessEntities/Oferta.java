@@ -4,6 +4,7 @@
  */
 package uy.edu.ort.arqJava.elOferton.businessEntities;
 
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -11,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Rodrigo
  */
 @XmlRootElement
-public class Oferta {
+public class Oferta implements Serializable{
 
     private long id;
     private String nombre;
