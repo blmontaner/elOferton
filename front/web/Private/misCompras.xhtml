@@ -31,34 +31,10 @@
                                         <f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
                                     </h:outputText>
                         </p:column>  
-                    </p:dataTable>  
-<!--                    <table class="table table-hover">
-                        <thead>
-                            <th>id</th>
-                            <th>Oferta</th>
-                            <th>Precio</th>
-                            <th>Fecha</th>
-                        </thead>
-                        <tbody>
-                            <ui:repeat value="#{compras.listaCompras}" var="compra" >
-                            <tr>
-                                <td>#{compra.id}</td>
-                                <td>#{compra.oferta.nombre}</td>
-                                <td>$#{compra.oferta.precio}</td>
-                                <td>
-                                    <h:outputText value="#{compra.fecha}">
-                                        <f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
-                                    </h:outputText>
-                                </td>
-                            </tr>
-                        </ui:repeat>
-                        </tbody>
-                    </table>-->
+                    </p:dataTable>
+
                 </h:form>
             </ui:insert>
         </p:layoutUnit>  
     </ui:define>
-
-    <ui:define name ="footer"><ui:include src="/Private/footer.xhtml"/></ui:define>
-
 </ui:composition>

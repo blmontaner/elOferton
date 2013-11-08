@@ -108,39 +108,16 @@ public class Repositorio {
     }
 
     private List<Compra> ComprasPrueba() {
-        List<Compra> l = new ArrayList<Compra>();
+        List<Compra> l = new ArrayList<>();
 
-        Compra c1 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c2 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c3 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c4 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c5 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c6 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c7 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c8 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c9 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c10 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c11 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c12 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c13 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c14 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
-        Compra c15 = new Compra(new Date(2013, 10, 17), new Usuario(1),new Oferta(1));
+        Compra c1 = new Compra(new Date(2013, 10, 17), new Usuario(1), new Oferta(2001, "Championes nike", "", 1000, new Empresa(1)),2123);
+        Compra c2 = new Compra(new Date(2013, 10, 10), new Usuario(1), new Oferta(2002, "10 Pelotas de Futbol", "", 7000, new Empresa(1)),2124);
+        Compra c3 = new Compra(new Date(2013, 10, 15), new Usuario(1), new Oferta(2010, "Correa para perro", "", 600, new Empresa(1)),2222);
 
         l.add(c1);
         l.add(c2);
         l.add(c3);
-        l.add(c4);
-        l.add(c5);
-        l.add(c6);
-        l.add(c7);
-        l.add(c8);
-        l.add(c9);
-        l.add(c10);
-        l.add(c11);
-        l.add(c12);
-        l.add(c13);
-        l.add(c14);
-        l.add(c15);
+        
 
         return l;
     }
