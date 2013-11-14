@@ -4,6 +4,12 @@
  */
 package uy.edu.ort.arqJava.elOferton.businessEntities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -11,8 +17,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Rodrigo
  */
 @XmlRootElement
+@Entity
+@Table(name = "T_EMPRESA")
 public class Empresa {
 
+    @Id
+    @Column(name = "ID")
     private long id;
     private String nombre;
     private String telefono;
@@ -25,7 +35,7 @@ public class Empresa {
     public Empresa(long id) {
         this.id = id;
     }
-    
+
     public Empresa(long id, String nombre, String telefono, String direccion, String email) {
         this.id = id;
         if (nombre != null) {

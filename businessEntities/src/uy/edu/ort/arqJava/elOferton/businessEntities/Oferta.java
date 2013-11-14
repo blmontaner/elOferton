@@ -5,6 +5,16 @@
 package uy.edu.ort.arqJava.elOferton.businessEntities;
 
 import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -12,17 +22,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Rodrigo
  */
 @XmlRootElement
-public class Oferta implements Serializable{
+@Entity
+@Table(name = "T_OFERTA")
+public class Oferta implements Serializable {
 
+    @Id
+    @Column(name = "ID")
     private long id;
     private String nombre;
     private String descripcion;
     private double precio;
+    @Temporal(TemporalType.DATE)
+    private Date fechaInicio;
+    @Temporal(TemporalType.DATE)
+    private Date fechaFin;
+    private boolean porElDia;
+    @ManyToOne
     private Empresa empresa;
 
     public Oferta() {
     }
-    
+
     public Oferta(long id) {
         this.id = id;
     }
@@ -92,6 +112,30 @@ public class Oferta implements Serializable{
 
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public boolean isPorElDia() {
+        return porElDia;
+    }
+
+    public void setPorElDia(boolean porElDia) {
+        this.porElDia = porElDia;
     }
 
     @Override

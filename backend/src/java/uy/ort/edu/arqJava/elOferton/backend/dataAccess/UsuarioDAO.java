@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 
@@ -17,82 +19,64 @@ import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
  */
 @Stateless
 public class UsuarioDAO implements IUsuarioDAO {
-    
+
+    @PersistenceContext
+    EntityManager em;
+
     public UsuarioDAO() {
     }
-    
+
     @Override
     public void save(Usuario entity) throws DatosException {
-        List<Usuario> listaUsuarios = Repositorio.getInscatnce().getUsuarios();
-        
-        boolean update = listaUsuarios.contains(entity);
-        
-        long nuevoId = Long.MIN_VALUE;
-        
-        if (update) {
-            listaUsuarios.remove(entity);
-        } else {
-            for (Usuario u : listaUsuarios) {
-                if (u.getId() > nuevoId) {
-                    nuevoId = u.getId();
-                }
-            }
-            
-            nuevoId = nuevoId + 1;
-            entity.setId(nuevoId);
-        }
-        
-        listaUsuarios.add(entity);
+        Usuario usuario = em.merge(entity);
+        em.flush();
+        entity.setId(usuario.getId());
     }
-    
+
     @Override
     public void delete(Usuario entity) throws DatosException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new NotImplementedException(); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public Usuario getByPK(Object id) throws DatosException {
-        List<Usuario> listaUsuarios = Repositorio.getInscatnce().getUsuarios();
-        
-        Iterator<Usuario> iter = listaUsuarios.iterator();
-        
-        while (iter.hasNext()) {
-            Usuario u = iter.next();
-            if (u.getId() == id) {
-                return u;
-            }
+
+        Usuario usuario = em.find(Usuario.class, id);
+
+        if (usuario == null) {
+            throw new DatosException("El usuario con id especificado no existe.");
         }
-        
-        throw new DatosException("El usuario con id especificado no existe.");
+
+        return usuario;
     }
-    
+
     @Override
     public List<Usuario> getAll() throws DatosException {
-        List<Usuario> listaUsuarios = Repositorio.getInscatnce().getUsuarios();
-        
+
+        List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+
+        listaUsuarios = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
+
         return listaUsuarios;
+        
     }
-    
+
     @Override
     public List<Usuario> getByProperty(String prop, Object val) throws DatosException {
-        
+
         List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-        
+
         if (prop.trim().toUpperCase().equals("NOMBREUSUARIO")) {
-            
-            Iterator<Usuario> iter = Repositorio.getInscatnce().getUsuarios().iterator();
-            
-            while (iter.hasNext()) {
-                Usuario u = iter.next();
-                if (u.getNombreUsuario().trim().equals((String) val)) {
-                    listaUsuarios.add(u);
-                }
-            }
-            
+
+            listaUsuarios = em.createQuery(
+                    "SELECT u FROM Usuario u WHERE u.nombreUsuario = :pNombreUsuario", Usuario.class)
+                    .setParameter("pNombreUsuario", val)
+                    .getResultList();
+
         } else {
             throw new NotImplementedException();
         }
-        
+
         return listaUsuarios;
     }
 }

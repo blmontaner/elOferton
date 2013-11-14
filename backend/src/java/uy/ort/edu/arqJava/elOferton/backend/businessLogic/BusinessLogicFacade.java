@@ -36,10 +36,10 @@ public class BusinessLogicFacade implements IBusinessLogicFacade {
     public long registrarUsuario(Usuario usuario) throws NegocioException {
 
         try {
-            List<Usuario> listaUsuarios = _daoUsuarios.getByProperty("nombreUsuario", usuario.getNombreUsuario());
+            List<Usuario> usuarios = _daoUsuarios.getByProperty("nombreUsuario", usuario.getNombreUsuario());
 
             //Valido que no exista un usuario con el mismo nombre de usuario registrado en el sistema
-            if (listaUsuarios.contains(usuario)) {
+            if (usuarios.contains(usuario)) {
                 throw new NegocioException("El usuario ingresado ya existe en el sistema.");
             }
 
@@ -61,7 +61,6 @@ public class BusinessLogicFacade implements IBusinessLogicFacade {
     @Override
     public Usuario validarLogin(String nombreUsuario, String contrasenia) throws NegocioException {
         try {
-
             List<Usuario> listaUsuarios = _daoUsuarios.getAll();
 
             Iterator<Usuario> iter = listaUsuarios.iterator();
@@ -120,12 +119,10 @@ public class BusinessLogicFacade implements IBusinessLogicFacade {
     }
 
     @Override
-    public void registrarCompra(long idUsuario, long idOferta, String nombreOferta, double precio, long idEmpresa) throws NegocioException {
+    public void registrarCompra(long idUsuario, long idOferta) throws NegocioException {
 
-        //Aca deberia verificar que existe el id de la compra ya que viene desde el fron (puede ser manipulado)
-        //El id de usuario se guarda en la sesion asi que en principio no habria como cambiarlo
-
-        Compra compra = new Compra(new Date(), new Usuario(idUsuario), new Oferta(idOferta, nombreOferta, "", precio, new Empresa(idEmpresa)));
+        //Compra compra = new Compra(new Date(), new Usuario(idUsuario), new Oferta(idOferta, nombreOferta, "", precio, new Empresa(idEmpresa)));
+        Compra compra = new Compra(new Date(), new Usuario(idUsuario), new Oferta(idOferta));
 
         try {
             _daoCompras.save(compra);

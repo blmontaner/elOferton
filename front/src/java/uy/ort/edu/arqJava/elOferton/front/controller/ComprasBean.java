@@ -38,7 +38,7 @@ public class ComprasBean {
         _logger.info("El usuario " + Utils.getNombreUsuarioLogueado() + " realizó una compra de la oferta " + oferta.getNombre());
         try {
             long idUsuario = Long.parseLong(Utils.getIdUsuarioLogueado());
-            _bl.registrarCompra(idUsuario, oferta.getId(), oferta.getNombre(),oferta.getPrecio(),oferta.getEmpresa().getId());
+            _bl.registrarCompra(idUsuario, oferta.getId());
         } catch (NegocioException ex) {
             _logger.error("Ocurrió un error al realizar una compra.\n[EXCEPTION] " + ex.getStackTrace());
         } catch (Exception ex) {

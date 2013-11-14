@@ -4,12 +4,26 @@
  */
 package uy.edu.ort.arqJava.elOferton.businessEntities;
 
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 /**
  *
  * @author Rodrigo
  */
+@Entity
+@Table(name = "T_USUARIO")
 public class Usuario {
 
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String nombreUsuario;
     private String contrasenia;
@@ -18,10 +32,14 @@ public class Usuario {
     private String direccion;
     private String apellido;
     private String telefono;
+    
+    @OneToMany(mappedBy = "usuario")
+    private List<Compra> compras;
 
     public Usuario() {
+       
     }
-    
+
     public Usuario(long id) {
         this.id = id;
     }
@@ -56,7 +74,7 @@ public class Usuario {
 
     public Usuario(String nombreUsuario, String contrasenia, String nombre,
             String email, String direccion, String apellido, String telefono) {
-
+               
         if (nombreUsuario != null) {
             this.nombreUsuario = nombreUsuario.trim();
         }
@@ -79,6 +97,14 @@ public class Usuario {
         if (apellido != null) {
             this.apellido = apellido.trim();
         }
+    }
+
+    public List<Compra> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(List<Compra> compras) {
+        this.compras = compras;
     }
 
     public long getId() {

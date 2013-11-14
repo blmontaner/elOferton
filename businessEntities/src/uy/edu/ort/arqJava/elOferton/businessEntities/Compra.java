@@ -6,29 +6,52 @@ package uy.edu.ort.arqJava.elOferton.businessEntities;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
+import javax.persistence.*;
 
 /**
  *
  * @author Rodrigo
  */
+
+@Table(name = "T_COMPRA")
+@Entity
 public class Compra {
 
-    private Date fecha;
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
+    @ManyToOne
+    @JoinColumn(name="USUARIO_ID",nullable=false)
     private Usuario usuario;
+    @ManyToOne
     private Oferta oferta;
+    private boolean paga;
+    private UUID identificador;
+
+    public Compra() {
+        this.paga = false;
+        this.identificador = UUID.randomUUID();
+    }
 
     public Compra(Date fecha, Usuario usuario, Oferta oferta) {
+        this.paga = false;
         this.fecha = fecha;
         this.usuario = usuario;
         this.oferta = oferta;
+        this.identificador = UUID.randomUUID();
     }
 
     public Compra(Date fecha, Usuario usuario, Oferta oferta, long id) {
+        this.paga = false;
         this.fecha = fecha;
         this.usuario = usuario;
         this.oferta = oferta;
         this.id = id;
+        this.identificador = UUID.randomUUID();
     }
 
     public long getId() {
