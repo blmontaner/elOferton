@@ -5,6 +5,7 @@
 package uy.edu.ort.jee.constantes;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Empresa;
@@ -19,10 +20,10 @@ public class Constantes {
     public static HashMap<Integer, Oferta> ofertas = new HashMap<>();
 
     static {
-        ofertas.put(0, new Oferta(1, "Escapada para 2", "Escapada para dos a Colonia en el mejor hotel del lugar", 2800.0, new Empresa(1, "Hotel Suizo", "0900 1324", "Colonia 1234", "hs@gmail.com")));
-        ofertas.put(1, new Oferta(2, "Adelgace ahora", "Grupo de adelgazamiento, 30 dias, agelgace 20 kg ahora", 3500.0, new Empresa(2, "Clinica de Adelgazamiento", "221196874", "Benito Blanco 1234", "adelgaceya@gmail.com")));
-        ofertas.put(2, new Oferta(3, "Canilla libre de pizza y calzone", "Canilla libre de pizza y calzone a la parrilla para 20 personas $ 3510", 3510.0, new Empresa(3, "Pizzeria pizzaPizza", "0900 1324", "Av Rivera 1234", "pizza@gmail.com")));
-        ofertas.put(3, new Oferta(4, "Ocho sesiones de auriculoterapia", "No te pierdas la oportunidad de cuidar tu cuerpo con un método no invasivo y totalmente efectivo.", 9800.0, new Empresa(4, "Clinica de Mayo", "0900 1324", "25 de Mayo 1234", "mayo@gmail.com")));
+        ofertas.put(0, new Oferta(1, "Escapada para 2", "Escapada para dos a Colonia en el mejor hotel del lugar", 2800.0, new Date(2013,10,01), new Date(2013,10,15) ,new Empresa(1, "Hotel Suizo", "0900 1324", "Colonia 1234", "hs@gmail.com")));
+        ofertas.put(1, new Oferta(2, "Adelgace ahora", "Grupo de adelgazamiento, 30 dias, agelgace 20 kg ahora", 3500.0,new Date(2013,10,01), new Date(2013,10,15), new Empresa(2, "Clinica de Adelgazamiento", "221196874", "Benito Blanco 1234", "adelgaceya@gmail.com")));
+        ofertas.put(2, new Oferta(3, "Canilla libre de pizza y calzone", "Canilla libre de pizza y calzone a la parrilla para 20 personas $ 3510", 3510.0,new Date(2013,10,01), new Date(2013,10,15),new Empresa(3, "Pizzeria pizzaPizza", "0900 1324", "Av Rivera 1234", "pizza@gmail.com")));
+        /*ofertas.put(3, new Oferta(4, "Ocho sesiones de auriculoterapia", "No te pierdas la oportunidad de cuidar tu cuerpo con un método no invasivo y totalmente efectivo.", 9800.0, new Empresa(4, "Clinica de Mayo", "0900 1324", "25 de Mayo 1234", "mayo@gmail.com")));
         ofertas.put(4, new Oferta(5, "¡Buenos Aires de lujo!", "Escapada para dos a Buenos Aires de lujo all inclusive", 92800.0, new Empresa(5, "ColoniaExpress", "0900 8888", "Colonia 8234", "coloniaEx@gmail.com")));
         ofertas.put(5, new Oferta(6, "Descontracturate ya", "¡Masajes descontracturantes con piedras calientes!", 800.0, new Empresa(6, "Masajes Sa", "0900 1888", "San Jose 1234", "masajesSA@gmail.com")));
         ofertas.put(6, new Oferta(7, "Salto en paracaidas", "Adrenalina desde el cielo: !Salto en paracaídas!", 3850.0, new Empresa(7, "ExtremeSports", "0900 0324", "Ruta 5 Km22", "exSports@gmail.com")));
@@ -39,7 +40,7 @@ public class Constantes {
         ofertas.put(17, new Oferta(18, "Guitarra les Paul", "Como la que le regalaron al pepe, la mejor guitarra para regalar. Con correa para colgar.", 300.0, new Empresa(17, "Cotinho", "0933 1324", "Uruguay 1234", "coutinho@gmail.com")));
         ofertas.put(18, new Oferta(19, "Piscina Inflable", "Se viene el verano, estas preparado? Piscina de 200 litros para 6 personas. No pases calor!", 9500.0, new Empresa(18, "Piscinazo", "0933 1324", "Propios 1234", "musgo@gmail.com")));
         ofertas.put(19, new Oferta(20, "Entrena tu mascota", "Entrenamiento de mascotas, 10 clases de obediencia en veterinaria Perro Rengo", 5500.0, new Empresa(19, "veterinaria Perro Rengo", "0933 1324", "Tacuarembo 1234", "perroRengo@gmail.com")));
-        ofertas.put(20, new Oferta(21, "Camara Pixar", "Registra tus mejores momentos. Camara Pixar 20 mega pixeles 26X Zoom Sumergible memoria de 64Gb", 2500.0, new Empresa(20, "Pixar", "0933 1324", "Siracusa 1234", "pixar@gmail.com")));
+        ofertas.put(20, new Oferta(21, "Camara Pixar", "Registra tus mejores momentos. Camara Pixar 20 mega pixeles 26X Zoom Sumergible memoria de 64Gb", 2500.0, new Empresa(20, "Pixar", "0933 1324", "Siracusa 1234", "pixar@gmail.com")));*/
     }
 
     private static Oferta getOferta(Integer i) {

@@ -13,5 +13,6 @@ import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
  */
 @Local
 public interface IUsuarioDAO extends IDAO<Usuario> {
-    
+
+    Usuario validarLogin(String nombreUsuario, String contrasenia) throws DatosException;
 }

@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import uy.edu.ort.arqJava.elOferton.businessEntities.Parametro;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 
 /**
@@ -58,7 +59,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         listaUsuarios = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
 
         return listaUsuarios;
-        
+
     }
 
     @Override
@@ -78,5 +79,22 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
 
         return listaUsuarios;
+    }
+
+    @Override
+    public Usuario validarLogin(String nombreUsuario, String contrasenia) throws DatosException {
+        List<Usuario> usuarios = new ArrayList<Usuario>();
+        
+        usuarios = em.createQuery(
+                "SELECT u FROM Usuario u WHERE u.nombreUsuario = :pNombreUsuario AND u.contrasenia = :pContrasenia", Usuario.class)
+                .setParameter("pNombreUsuario", nombreUsuario)
+                .setParameter("pContrasenia", contrasenia)
+                .getResultList();
+
+        if (usuarios.size() == 1) {
+            return usuarios.get(0);
+        } else {
+            return null;
+        }
     }
 }

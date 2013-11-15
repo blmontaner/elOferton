@@ -47,7 +47,7 @@ public class Oferta implements Serializable {
         this.id = id;
     }
 
-    public Oferta(long id, String nombre, String descripcion, double precio, Empresa empresa) {
+    public Oferta(long id, String nombre, String descripcion, double precio,Date fechaInicio, Date fechaFin, Empresa empresa) {
         this.id = id;
         if (nombre != null) {
             this.nombre = nombre.trim();

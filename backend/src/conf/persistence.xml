@@ -7,6 +7,7 @@
     <class>uy.edu.ort.arqJava.elOferton.businessEntities.Empresa</class>
     <class>uy.edu.ort.arqJava.elOferton.businessEntities.Oferta</class>
     <class>uy.edu.ort.arqJava.elOferton.businessEntities.Usuario</class>
+    <class>uy.edu.ort.arqJava.elOferton.businessEntities.Parametro</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.ddl-generation" value="create-tables"/>

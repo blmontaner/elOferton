@@ -4,6 +4,7 @@
  */
 package uy.ort.edu.arqJava.elOferton.backend.dataAccess;
 
+import java.util.List;
 import javax.ejb.Local;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Oferta;
 
@@ -14,6 +15,10 @@ import uy.edu.ort.arqJava.elOferton.businessEntities.Oferta;
 @Local
 public interface IOfertaDAO extends IDAO<Oferta> {
     
+    boolean consultaOfertas() throws DatosException;
     
+    List<Oferta> obtenerOfertasVigentes() throws DatosException;
+    
+    void agregarOfertas(List<Oferta> ofertas) throws DatosException;
     
 }

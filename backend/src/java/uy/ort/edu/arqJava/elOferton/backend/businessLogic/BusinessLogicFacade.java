@@ -4,6 +4,7 @@ package uy.ort.edu.arqJava.elOferton.backend.businessLogic;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -17,6 +18,7 @@ import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 import uy.ort.edu.arqJava.elOferton.backend.businessLogic.utils.InputValidations;
 import uy.ort.edu.arqJava.elOferton.backend.dataAccess.DatosException;
 import uy.ort.edu.arqJava.elOferton.backend.dataAccess.ICompraDAO;
+import uy.ort.edu.arqJava.elOferton.backend.dataAccess.IOfertaDAO;
 import uy.ort.edu.arqJava.elOferton.backend.dataAccess.IUsuarioDAO;
 
 /**
@@ -31,6 +33,8 @@ public class BusinessLogicFacade implements IBusinessLogicFacade {
     private IUsuarioDAO _daoUsuarios;
     @EJB
     private ICompraDAO _daoCompras;
+    @EJB
+    private IOfertaDAO _daoOfertas;
 
     @Override
     public long registrarUsuario(Usuario usuario) throws NegocioException {
@@ -61,18 +65,24 @@ public class BusinessLogicFacade implements IBusinessLogicFacade {
     @Override
     public Usuario validarLogin(String nombreUsuario, String contrasenia) throws NegocioException {
         try {
-            List<Usuario> listaUsuarios = _daoUsuarios.getAll();
+            /*List<Usuario> listaUsuarios = _daoUsuarios.getAll();
 
-            Iterator<Usuario> iter = listaUsuarios.iterator();
+             Iterator<Usuario> iter = listaUsuarios.iterator();
 
-            while (iter.hasNext()) {
-                Usuario u = iter.next();
-                if (u.getNombreUsuario().equals(nombreUsuario.trim()) && u.getContrasenia().equals(contrasenia.trim())) {
-                    return u;
-                }
+             while (iter.hasNext()) {
+             Usuario u = iter.next();
+             if (u.getNombreUsuario().equals(nombreUsuario.trim()) && u.getContrasenia().equals(contrasenia.trim())) {
+             return u;
+             }
+             }*/
+
+            Usuario usuario = _daoUsuarios.validarLogin(nombreUsuario, contrasenia);
+
+            if (usuario == null) {
+                throw new NegocioException("El nombre de usuario y/o contraseña ingresados no son válidos.");
+            } else {
+                return usuario;
             }
-
-            throw new NegocioException("El nombre de usuario y/o contraseña ingresados no son válidos.");
 
         } catch (NegocioException ex) {
             throw ex;
@@ -139,6 +149,47 @@ public class BusinessLogicFacade implements IBusinessLogicFacade {
             List<Compra> listaCompras = _daoCompras.getByProperty("idUsuario", idUsuario);
 
             return listaCompras;
+        } catch (DatosException ex) {
+            throw new NegocioException(ex, ex.getLocalizedMessage());
+        } catch (Exception ex) {
+            throw new NegocioException(ex, MSJ_ERROR_GENERICO);
+        }
+    }
+
+    @Override
+    public boolean consultaOfertas() throws NegocioException {
+        boolean consulta = false;
+
+        try {
+            consulta = _daoOfertas.consultaOfertas();
+        } catch (DatosException ex) {
+            throw new NegocioException(ex, ex.getLocalizedMessage());
+        } catch (Exception ex) {
+            throw new NegocioException(ex, MSJ_ERROR_GENERICO);
+        }
+
+        return consulta;
+    }
+
+    @Override
+    public List<Oferta> obtenerOfertasVigentes() throws NegocioException {
+        List<Oferta> ofertas = new ArrayList<Oferta>();
+
+        try {
+            ofertas = _daoOfertas.obtenerOfertasVigentes();
+        } catch (DatosException ex) {
+            throw new NegocioException(ex, ex.getLocalizedMessage());
+        } catch (Exception ex) {
+            throw new NegocioException(ex, MSJ_ERROR_GENERICO);
+        }
+
+        return ofertas;
+    }
+
+    @Override
+    public void agregarOfertas(List<Oferta> ofertas) throws NegocioException {
+        try {
+            _daoOfertas.agregarOfertas(ofertas);
         } catch (DatosException ex) {
             throw new NegocioException(ex, ex.getLocalizedMessage());
         } catch (Exception ex) {
