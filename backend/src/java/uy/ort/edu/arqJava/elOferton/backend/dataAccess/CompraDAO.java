@@ -54,12 +54,10 @@ public class CompraDAO implements ICompraDAO {
     @Override
     public List<Compra> getByProperty(String prop, Object val) throws DatosException {
         List<Compra> compras = new ArrayList<Compra>();
-
+        
         if (prop.trim().toUpperCase().equals("IDUSUARIO")) {
-
             Usuario usuario = em.find(Usuario.class, val);
             compras = usuario.getCompras();
-
         } else {
             throw new NotImplementedException();
         }

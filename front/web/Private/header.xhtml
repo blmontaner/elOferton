@@ -17,7 +17,7 @@
                 <p:submenu label="Menú">
                     <p:submenu label="Mi Cuenta" rendered="#{not empty nombreUsuario}">
                         <p:menuitem ajax="false" value="Mis Datos" icon="ui-icon-person" action="#{usuarios.obtenerMisDatos}" />
-                        <p:menuitem ajax="false" value="Mis Compras" icon="ui-icon-cart" url="/misCompras.xhtml" />         
+                        <p:menuitem ajax="false" value="Mis Compras" icon="ui-icon-cart" url="/Private/misCompras.xhtml" />         
                         <p:menuitem ajax="false" value="Logout" icon="ui-icon-power" action="#{login.logout}"/>         
                     </p:submenu>
                     <p:menuitem ajax="false" value="Inicio" icon="ui-icon-home" url="/index.xhtml" />

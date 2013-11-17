@@ -32,6 +32,22 @@ public class Compra {
     private boolean paga;
     private UUID identificador;
 
+    public boolean isPaga() {
+        return paga;
+    }
+
+    public void setPaga(boolean paga) {
+        this.paga = paga;
+    }
+
+    public UUID getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(UUID identificador) {
+        this.identificador = identificador;
+    }
+
     public Compra() {
         this.paga = false;
         this.identificador = UUID.randomUUID();

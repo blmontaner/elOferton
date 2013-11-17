@@ -13,7 +13,7 @@
         <p:layoutUnit position="center" >  
             <ui:insert name="centro">
                 <h:form prependId="false">
-                    <ui:repeat value="#{ofertas.ofertasDia}" var="oferta" id="ofertas" varStatus="status">
+                    <ui:repeat value="#{ofertas.ofertas}" var="oferta" id="ofertas" varStatus="status">
                         <p:panel id="of" styleClass="well" style="height: 115px;margin-bottom: 5px" >  
                             <div style="float:right; margin:-28px -36px ;padding:5px" class="alert alert-success"><h:outputText   value="Precio $#{oferta.precio}" /></div>
                             <div style="height: 50px;margin: -22px 0px 15px 0px;"><h2><h:outputText style="text-align: left;color: #009ddc;margin-bottom: 5px;padding: 0 0 5px 0;text-transform: uppercase;font-size: 24px;" value="#{oferta.nombre}" /></h2></div>

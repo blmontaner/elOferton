@@ -52,6 +52,7 @@ public class ComprasBean {
         try {
             long idUsuario = Long.parseLong(Utils.getIdUsuarioLogueado());
             listaCompras = _bl.obtenerComprasPorUsuario(idUsuario);
+            _logger.info("COMPRAS: "+ listaCompras.size());
         } catch (NegocioException ex) {
             _logger.error("Ocurrió un error al intentar obtener la lista de compras de un usuario.\n[EXCEPTION] " + ex.getStackTrace());
         } catch (Exception ex) {

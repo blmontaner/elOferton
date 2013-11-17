@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import uy.edu.ort.arqJava.elOferton.businessEntities.utils.DateAdapter;
 
 /**
  *
@@ -47,7 +49,7 @@ public class Oferta implements Serializable {
         this.id = id;
     }
 
-    public Oferta(long id, String nombre, String descripcion, double precio,Date fechaInicio, Date fechaFin, Empresa empresa) {
+    public Oferta(long id, String nombre, String descripcion, double precio, Date fechaInicio, Date fechaFin, Empresa empresa) {
         this.id = id;
         if (nombre != null) {
             this.nombre = nombre.trim();
@@ -57,6 +59,8 @@ public class Oferta implements Serializable {
         }
         this.precio = precio;
         this.empresa = empresa;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
     }
 
     public Oferta(String nombre, String descripcion, double precio, Empresa empresa) {
@@ -118,10 +122,12 @@ public class Oferta implements Serializable {
         return fechaInicio;
     }
 
+    @XmlJavaTypeAdapter(DateAdapter.class)
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
+    @XmlJavaTypeAdapter(DateAdapter.class)
     public Date getFechaFin() {
         return fechaFin;
     }
