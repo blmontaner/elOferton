@@ -5,14 +5,14 @@
 package uy.ort.edu.arqJava.elOferton.backend.dataAccess;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Compra;
-import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 
 /**
  *
@@ -21,10 +21,11 @@ import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 @Stateless
 public class CompraDAO implements ICompraDAO {
 
-    public CompraDAO() {
-    }
     @PersistenceContext
     EntityManager em;
+
+    public CompraDAO() {
+    }
 
     @Override
     public void save(Compra entity) throws DatosException {
@@ -53,15 +54,32 @@ public class CompraDAO implements ICompraDAO {
 
     @Override
     public List<Compra> getByProperty(String prop, Object val) throws DatosException {
-        List<Compra> compras = new ArrayList<Compra>();
-        
+
         if (prop.trim().toUpperCase().equals("IDUSUARIO")) {
-            Usuario usuario = em.find(Usuario.class, val);
-            compras = usuario.getCompras();
+
+            Query q = em.createQuery("SELECT c"
+                    + "       FROM Compra c"
+                    + "      WHERE c.usuario.id = :usuarioID");
+
+            q.setParameter("usuarioID", val);
+
+            return q.getResultList();
         } else {
             throw new NotImplementedException();
         }
+    }
 
-        return compras;
+    @Override
+    public void marcarComprasComoPagas(List<UUID> identificadores) throws DatosException {
+
+        for (UUID i : identificadores) {
+
+            Compra compra = em.createQuery(
+                    "SELECT c FROM Compra c WHERE c.identificador = :pIdentificador", Compra.class)
+                    .setParameter("pIdentificador", i).getSingleResult();
+
+            compra.setPaga(true);
+        }
+
     }
 }

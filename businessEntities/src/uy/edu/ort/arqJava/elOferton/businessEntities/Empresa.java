@@ -6,8 +6,6 @@ package uy.edu.ort.arqJava.elOferton.businessEntities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -24,6 +22,7 @@ public class Empresa {
     @Id
     @Column(name = "ID")
     private long id;
+    
     private String nombre;
     private String telefono;
     private String direccion;

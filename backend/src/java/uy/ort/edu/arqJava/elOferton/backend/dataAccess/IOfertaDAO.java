@@ -5,6 +5,7 @@
 package uy.ort.edu.arqJava.elOferton.backend.dataAccess;
 
 import java.util.List;
+import java.util.UUID;
 import javax.ejb.Local;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Oferta;
 

@@ -6,20 +6,13 @@ package uy.ort.edu.arqJava.elOferton.backend.businessLogic;
  */
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import uy.edu.ort.arqJava.elOferton.businessEntities.Compra;
-import uy.edu.ort.arqJava.elOferton.businessEntities.Empresa;
-import uy.edu.ort.arqJava.elOferton.businessEntities.Oferta;
-import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
+import uy.edu.ort.arqJava.elOferton.businessEntities.*;
+import uy.ort.edu.arqJava.elOferton.backend.dataAccess.*;
 import uy.ort.edu.arqJava.elOferton.backend.businessLogic.utils.InputValidations;
-import uy.ort.edu.arqJava.elOferton.backend.dataAccess.DatosException;
-import uy.ort.edu.arqJava.elOferton.backend.dataAccess.ICompraDAO;
-import uy.ort.edu.arqJava.elOferton.backend.dataAccess.IOfertaDAO;
-import uy.ort.edu.arqJava.elOferton.backend.dataAccess.IUsuarioDAO;
 
 /**
  *
@@ -65,17 +58,6 @@ public class BusinessLogicFacade implements IBusinessLogicFacade {
     @Override
     public Usuario validarLogin(String nombreUsuario, String contrasenia) throws NegocioException {
         try {
-            /*List<Usuario> listaUsuarios = _daoUsuarios.getAll();
-
-             Iterator<Usuario> iter = listaUsuarios.iterator();
-
-             while (iter.hasNext()) {
-             Usuario u = iter.next();
-             if (u.getNombreUsuario().equals(nombreUsuario.trim()) && u.getContrasenia().equals(contrasenia.trim())) {
-             return u;
-             }
-             }*/
-
             Usuario usuario = _daoUsuarios.validarLogin(nombreUsuario, contrasenia);
 
             if (usuario == null) {
@@ -83,7 +65,6 @@ public class BusinessLogicFacade implements IBusinessLogicFacade {
             } else {
                 return usuario;
             }
-
         } catch (NegocioException ex) {
             throw ex;
         } catch (DatosException ex) {
@@ -131,7 +112,6 @@ public class BusinessLogicFacade implements IBusinessLogicFacade {
     @Override
     public void registrarCompra(long idUsuario, long idOferta) throws NegocioException {
 
-        //Compra compra = new Compra(new Date(), new Usuario(idUsuario), new Oferta(idOferta, nombreOferta, "", precio, new Empresa(idEmpresa)));
         Compra compra = new Compra(new Date(), new Usuario(idUsuario), new Oferta(idOferta));
 
         try {

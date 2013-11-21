@@ -59,7 +59,6 @@ public class LoginBean implements Serializable {
         Usuario usuario = null;
         boolean loginValido = false;
 
-        //Pasar esto a .properties
         String urlRedireccion = Configuracion.getInstancia().getPropiedad("urlRedireccionLogin");;
 
         try {

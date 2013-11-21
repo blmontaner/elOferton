@@ -22,14 +22,19 @@ public class Compra {
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    
     @Temporal(TemporalType.DATE)
     private Date fecha;
+    
     @ManyToOne
     @JoinColumn(name="USUARIO_ID",nullable=false)
     private Usuario usuario;
+    
     @ManyToOne
     private Oferta oferta;
+    
     private boolean paga;
+    
     private UUID identificador;
 
     public boolean isPaga() {

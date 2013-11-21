@@ -4,16 +4,8 @@
  */
 package uy.ort.edu.arqJava.elOferton.backend.dataAccess;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,7 +17,6 @@ import org.joda.time.format.DateTimeFormatter;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Oferta;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Parametro;
-import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 
 /**
  *
@@ -42,16 +33,11 @@ public class OfertaDAO implements IOfertaDAO {
 
     @Override
     public void save(Oferta entity) throws DatosException {
-        /*Repositorio.getInscatnce().getOfertas().add(entity);
-
-         if (!Repositorio.getInscatnce().getEmpresas().contains(entity.getEmpresa())) {
-         Repositorio.getInscatnce().getEmpresas().add(entity.getEmpresa());
-         }*/
 
         Oferta oferta = em.merge(entity);
         em.flush();
         entity.setId(oferta.getId());
-
+        
     }
 
     @Override
@@ -61,13 +47,6 @@ public class OfertaDAO implements IOfertaDAO {
 
     @Override
     public Oferta getByPK(Object id) throws DatosException {
-        /*Oferta ret = new Oferta();
-         for (Oferta o : Repositorio.getInscatnce().getOfertas()) {
-         if (o.getId() == id) {
-         return o;
-         }
-         }
-         return ret;*/
 
         Oferta oferta = em.find(Oferta.class, id);
 
@@ -94,7 +73,7 @@ public class OfertaDAO implements IOfertaDAO {
     }
 
     @Override
-    public boolean consultaOfertas() {
+    public boolean consultaOfertas() throws DatosException {
         boolean consulta = false;
 
         LocalDate today = LocalDate.now();
@@ -115,7 +94,7 @@ public class OfertaDAO implements IOfertaDAO {
     }
 
     @Override
-    public List<Oferta> obtenerOfertasVigentes() {
+    public List<Oferta> obtenerOfertasVigentes() throws DatosException {
 
         List<Oferta> listaOfertas = new ArrayList<Oferta>();
 
@@ -132,7 +111,7 @@ public class OfertaDAO implements IOfertaDAO {
     }
 
     @Override
-    public void agregarOfertas(List<Oferta> ofertas) {
+    public void agregarOfertas(List<Oferta> ofertas) throws DatosException {
         for (Oferta o : ofertas) {
             if (em.find(Oferta.class, o.getId()) == null) {
                 em.persist(o);

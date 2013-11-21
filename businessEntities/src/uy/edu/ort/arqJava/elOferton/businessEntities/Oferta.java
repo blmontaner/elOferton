@@ -8,8 +8,6 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -32,13 +30,18 @@ public class Oferta implements Serializable {
     @Column(name = "ID")
     private long id;
     private String nombre;
+    
     private String descripcion;
     private double precio;
+    
     @Temporal(TemporalType.DATE)
     private Date fechaInicio;
+    
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
+    
     private boolean porElDia;
+    
     @ManyToOne
     private Empresa empresa;
 

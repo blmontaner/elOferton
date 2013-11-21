@@ -6,7 +6,6 @@ package uy.ort.edu.arqJava.elOferton.front.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -52,7 +51,7 @@ public class ComprasBean {
         try {
             long idUsuario = Long.parseLong(Utils.getIdUsuarioLogueado());
             listaCompras = _bl.obtenerComprasPorUsuario(idUsuario);
-            _logger.info("COMPRAS: "+ listaCompras.size());
+            _logger.info("ID USUARIO: "+ Utils.getIdUsuarioLogueado());
         } catch (NegocioException ex) {
             _logger.error("Ocurrió un error al intentar obtener la lista de compras de un usuario.\n[EXCEPTION] " + ex.getStackTrace());
         } catch (Exception ex) {

@@ -5,13 +5,11 @@
 package uy.ort.edu.arqJava.elOferton.backend.dataAccess;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import uy.edu.ort.arqJava.elOferton.businessEntities.Parametro;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 
 /**
