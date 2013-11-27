@@ -11,10 +11,14 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import uy.edu.ort.arqJava.elOferton.businessEntities.Compra;
 import uy.edu.ort.arqJava.elOferton.businessEntities.ListaOfertas;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Oferta;
+import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 import uy.ort.edu.arqJava.elOferton.backend.businessLogic.IBusinessLogicFacade;
 import uy.ort.edu.arqJava.elOferton.backend.businessLogic.NegocioException;
+import uy.ort.edu.arqJava.elOferton.front.utils.Utils;
 import uy.ort.edu.arqJava.elOferton.front.webserviceclient.OfertasServiceClient;
 
 /**
@@ -80,5 +84,23 @@ public class OfertasBean {
         }
         //}
         return listaOfertas;
+    }
+
+    public boolean getOfertaComprada(String idOferta) {
+        HttpSession session = Utils.getSession(true);
+        if (session.getAttribute("usuario") != null) {
+            Usuario u = (Usuario) session.getAttribute("usuario");
+            return u.isOfertaComprada(Long.parseLong(idOferta));
+        }
+        return false;
+    }
+
+    public String getIdCompraPorOfertaDeSesion(String idOferta) {
+        HttpSession session = Utils.getSession(true);
+        if (session.getAttribute("usuario") != null) {
+            Usuario u = (Usuario) session.getAttribute("usuario");
+            return u.getIdCompraOfertaComprada(Long.parseLong(idOferta)) + "";
+        }
+        return "";
     }
 }

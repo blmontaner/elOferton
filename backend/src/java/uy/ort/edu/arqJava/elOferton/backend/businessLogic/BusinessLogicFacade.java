@@ -7,6 +7,7 @@ package uy.ort.edu.arqJava.elOferton.backend.businessLogic;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -14,7 +15,7 @@ import uy.edu.ort.arqJava.elOferton.businessEntities.*;
 import uy.ort.edu.arqJava.elOferton.backend.dataAccess.*;
 import uy.ort.edu.arqJava.elOferton.backend.businessLogic.utils.InputValidations;
 
-/**
+/** 
  *
  * @author Rodrigo
  */
@@ -110,7 +111,7 @@ public class BusinessLogicFacade implements IBusinessLogicFacade {
     }
 
     @Override
-    public void registrarCompra(long idUsuario, long idOferta) throws NegocioException {
+    public Compra registrarCompra(long idUsuario, long idOferta) throws NegocioException {
 
         Compra compra = new Compra(new Date(), new Usuario(idUsuario), new Oferta(idOferta));
 
@@ -121,6 +122,7 @@ public class BusinessLogicFacade implements IBusinessLogicFacade {
         } catch (Exception ex) {
             throw new NegocioException(ex, MSJ_ERROR_GENERICO);
         }
+        return compra;
     }
 
     @Override
@@ -192,4 +194,5 @@ public class BusinessLogicFacade implements IBusinessLogicFacade {
             throw new NegocioException("La contrasenia debe tener entre 5 y 15 caracteres.");
         }
     }
+    
 }

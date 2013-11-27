@@ -222,4 +222,22 @@ public class Usuario {
 
         return xml;
     }
+    
+    public boolean isOfertaComprada(long idOferta){
+        for(Compra c : compras){
+            if(c.getOferta().getId() == idOferta){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public long getIdCompraOfertaComprada(long idOferta){
+        for(Compra c : compras){
+            if(c.getOferta().getId() == idOferta){
+                return c.getId();
+            }
+        }
+        return 0;
+    }
 }

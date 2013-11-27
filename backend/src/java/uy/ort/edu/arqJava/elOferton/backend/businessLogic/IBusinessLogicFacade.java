@@ -25,7 +25,7 @@ public interface IBusinessLogicFacade {
 
     void actualizarDatosUsuario(Usuario usuario) throws NegocioException;
 
-    void registrarCompra(long idUsuario, long idOferta) throws NegocioException;
+    Compra registrarCompra(long idUsuario, long idOferta) throws NegocioException;
 
     List<Compra> obtenerComprasPorUsuario(long idUsuario) throws NegocioException;
 
@@ -34,4 +34,5 @@ public interface IBusinessLogicFacade {
     List<Oferta> obtenerOfertasVigentes() throws NegocioException;
 
     void agregarOfertas(List<Oferta> ofertas) throws NegocioException;
+    
 }

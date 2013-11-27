@@ -70,7 +70,7 @@ public class LoginBean implements Serializable {
             HttpSession session = Utils.getSession(true);
             session.setAttribute("nombreUsuario", usuario.getNombreUsuario());
             session.setAttribute("idUsuario", usuario.getId());
-
+            session.setAttribute("usuario", usuario);
             RequestContext.getCurrentInstance().addCallbackParam("loginValido", loginValido);
             RequestContext.getCurrentInstance().addCallbackParam("urlRedireccion", urlRedireccion);
         } catch (NegocioException ex) {

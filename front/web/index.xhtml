@@ -12,20 +12,29 @@
     <ui:define name ="body">     
         <p:layoutUnit position="center" >  
             <ui:insert name="centro">
-                <h:form prependId="false">
-                    <ui:repeat value="#{ofertas.ofertas}" var="oferta" id="ofertas" varStatus="status">
+                <h:form prependId="false" id="form">
+                    <ui:repeat value="#{ofertas.ofertas}" var="oferta" id="ofertas" varStatus="status" >
                         <p:panel id="of" styleClass="well" style="height: 115px;margin-bottom: 5px" >  
                             <div style="float:right; margin:-28px -36px ;padding:5px" class="alert alert-success"><h:outputText   value="Precio $#{oferta.precio}" /></div>
                             <div style="height: 50px;margin: -22px 0px 15px 0px;"><h2><h:outputText style="text-align: left;color: #009ddc;margin-bottom: 5px;padding: 0 0 5px 0;text-transform: uppercase;font-size: 24px;" value="#{oferta.nombre}" /></h2></div>
                             <p style="text-align: left;"><h:outputText  value="#{oferta.descripcion}" /> </p>
+                            <p:outputPanel id="panelCompra">
                             <p style="text-align: left; float: left;padding: 3px 23px;" class="comp#{oferta.id}"> 
-                                <p:commandLink rendered="#{not empty nombreUsuario}" value="Comprar" oncomplete="showComprado('comp#{oferta.id}','comprado#{oferta.id}');"
-                                                 action="#{compras.realizarCompra(oferta)}" styleClass ="btn"
-                                                 id="btnGlobal" />  
+                                <p:commandLink rendered="#{not empty nombreUsuario and not ofertas.getOfertaComprada(oferta.id)}" value="Comprar"
+                                               action="#{compras.realizarCompra(oferta)}" styleClass ="btn" 
+                                               id="btnGlobal" update="panelCompra"/>  
                             </p>
-                            <p style="text-align: left; float: left;padding: 3px 23px; display: none;" class="alert alert-success comprado#{oferta.id}"> 
-                                Comprado  ✔ 
-                            </p>
+                            
+                             <p:outputPanel  rendered="#{not empty nombreUsuario and ofertas.getOfertaComprada(oferta.id)}"> 
+                                <p style="text-align: left; float: left;padding: 3px 23px;" class="alert alert-success comprado#{oferta.id}"> 
+                                    Comprado  ✔ 
+                                    <h:link value="Cupon" outcome="Private/compraPdf" >
+                                        <f:param name="compraId" value="#{ofertas.getIdCompraPorOfertaDeSesion(oferta.id)}" />
+                                    </h:link>
+                                </p>
+                            </p:outputPanel >
+                            </p:outputPanel>
+
                             <p style="text-align: right;float: right; font-weight:  bold">
                                 <p:commandLink id="modalDialogButton" value="#{oferta.empresa.nombre}" onclick="dlgEmpresa#{oferta.empresa.id}.show();" type="button"/>  
                             </p>
@@ -40,14 +49,14 @@
                         </p:panel>
                     </ui:repeat>
 
-               
+
 
                 </h:form>
                 <script type="text/javascript">
-                    function showComprado(idboton,idfinalizar){
-                        $('.'+idboton).hide();
-                        $('.'+idfinalizar).show();
-                    }
+                                    function showComprado(idboton, idfinalizar) {
+                                        $('.' + idboton).hide();
+                                        $('.' + idfinalizar).show();
+                                    }
                 </script>
             </ui:insert>
         </p:layoutUnit>  

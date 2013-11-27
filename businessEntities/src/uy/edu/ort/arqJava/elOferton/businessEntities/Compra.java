@@ -40,6 +40,11 @@ public class Compra {
     public boolean isPaga() {
         return paga;
     }
+    
+    @Transient
+    public String getStatus() {
+        return  this.paga ? "Paga" : "Pendiente";
+    }
 
     public void setPaga(boolean paga) {
         this.paga = paga;
@@ -47,7 +52,7 @@ public class Compra {
 
     public UUID getIdentificador() {
         return identificador;
-    }
+    } 
 
     public void setIdentificador(UUID identificador) {
         this.identificador = identificador;

@@ -31,6 +31,15 @@
                                         <f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
                                     </h:outputText>
                         </p:column>  
+                        
+                        <p:column headerText="Estado">  
+                            <p:outputPanel >
+                                <h:link value="#{compra.status}" outcome="compraPdf">
+                                    <f:param name="compraId" value="#{compra.id}" />
+                                </h:link>
+                            </p:outputPanel>
+                        </p:column>
+                        
                     </p:dataTable>
 
                 </h:form>

@@ -9,9 +9,11 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Compra;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Oferta;
+import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 import uy.ort.edu.arqJava.elOferton.backend.businessLogic.IBusinessLogicFacade;
 import uy.ort.edu.arqJava.elOferton.backend.businessLogic.NegocioException;
 import uy.ort.edu.arqJava.elOferton.front.utils.Utils;
@@ -37,21 +39,26 @@ public class ComprasBean {
         _logger.info("El usuario " + Utils.getNombreUsuarioLogueado() + " realizó una compra de la oferta " + oferta.getNombre());
         try {
             long idUsuario = Long.parseLong(Utils.getIdUsuarioLogueado());
-            _bl.registrarCompra(idUsuario, oferta.getId());
+            Compra compra = _bl.registrarCompra(idUsuario, oferta.getId());
+            HttpSession session = Utils.getSession(true);
+            if (session.getAttribute("usuario") != null) {
+                Usuario u = (Usuario) session.getAttribute("usuario");
+                u.getCompras().add(compra);
+            }
         } catch (NegocioException ex) {
             _logger.error("Ocurrió un error al realizar una compra.\n[EXCEPTION] " + ex.getStackTrace());
         } catch (Exception ex) {
             _logger.error("Ocurrió un error al realizar una compra.\n[EXCEPTION] " + ex.getStackTrace());
         }
     }
-    
+
     public List<Compra> getListaCompras() {
         _logger.info("Se obtiene la lista de compras del usuario " + Utils.getNombreUsuarioLogueado());
         listaCompras = new ArrayList<>();
         try {
             long idUsuario = Long.parseLong(Utils.getIdUsuarioLogueado());
             listaCompras = _bl.obtenerComprasPorUsuario(idUsuario);
-            _logger.info("ID USUARIO: "+ Utils.getIdUsuarioLogueado());
+            _logger.info("ID USUARIO: " + Utils.getIdUsuarioLogueado());
         } catch (NegocioException ex) {
             _logger.error("Ocurrió un error al intentar obtener la lista de compras de un usuario.\n[EXCEPTION] " + ex.getStackTrace());
         } catch (Exception ex) {
@@ -59,4 +66,6 @@ public class ComprasBean {
         }
         return listaCompras;
     }
+    
+    
 }

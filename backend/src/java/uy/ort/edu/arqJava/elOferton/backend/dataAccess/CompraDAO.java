@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Compra;
+import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
 
 /**
  *
@@ -39,7 +40,13 @@ public class CompraDAO implements ICompraDAO {
 
     @Override
     public Compra getByPK(Object id) throws DatosException {
-        throw new NotImplementedException();
+         Compra ret = em.find(Compra.class, id);
+
+        if (ret == null) {
+            throw new DatosException("La Compra con id especificado no existe.");
+        }
+
+        return ret;
     }
 
     @Override

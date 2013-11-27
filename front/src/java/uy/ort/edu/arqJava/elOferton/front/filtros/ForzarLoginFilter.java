@@ -4,7 +4,13 @@
  */
 package uy.ort.edu.arqJava.elOferton.front.filtros;
 
+import com.lowagie.text.DocumentException;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.StringReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.render.Renderer;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -15,15 +21,22 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  *
  * @author Rodrigo
  */
-public class ForzarLoginFilter implements Filter{
-    
-     private static final String PAGINA_LOGIN = "login.xhtml";
-     private static final String PAGINA_INDEX = "index.xhtml";
+public class ForzarLoginFilter implements Filter {
+
+    private static final String PAGINA_LOGIN = "login.xhtml";
+    private static final String PAGINA_INDEX = "index.xhtml";
 
     public ForzarLoginFilter() {
     }
@@ -35,7 +48,7 @@ public class ForzarLoginFilter implements Filter{
 
         HttpSession session = ((HttpServletRequest) request).getSession(false);
 
-        if(session != null && session.getAttribute("nombreUsuario") != null) {
+        if (session != null && session.getAttribute("nombreUsuario") != null) {
             usuarioLogueado = true;
         }
 
@@ -45,7 +58,7 @@ public class ForzarLoginFilter implements Filter{
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
-        if(necesitaRedireccion((HttpServletRequest) request)){
+        if (necesitaRedireccion((HttpServletRequest) request)) {
 
             boolean estaLogueado = chequearEstadoLogin(request, response);
 
@@ -62,15 +75,33 @@ public class ForzarLoginFilter implements Filter{
 
             } else {
                 try {
-                    chain.doFilter(request, response);
-                } catch (Throwable t) {
+                    if (esPaginaPdf((HttpServletRequest) request)) {
+                        ContentCaptureServletResponse capContent = new ContentCaptureServletResponse((HttpServletResponse)response);  
+                        chain.doFilter(request, capContent);
+                        StringReader contentReader = new StringReader(capContent.getContent());
+                        InputSource source = new InputSource(contentReader);
+                        
+                        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                        DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+                        Document xhtmlContent =  (Document) documentBuilder.parse(source);
+                        
+                        ITextRenderer renderer = new ITextRenderer();
+                        renderer.setDocument( xhtmlContent, "");
+                        renderer.layout();
+                        response.setContentType("application/pdf");
+                        OutputStream browserStream = response.getOutputStream();
+                        renderer.createPDF(browserStream);
+                    }else{
+                        chain.doFilter(request, response);
+                    }
+                } catch (IOException | ServletException | ParserConfigurationException | SAXException | DocumentException t) {
                     System.out.println(t.getMessage());
                 }
             }
         }
     }
-    
-    private boolean necesitaRedireccion(HttpServletRequest request){
+
+    private boolean necesitaRedireccion(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         return !(requestURI.contains(PAGINA_INDEX) || requestURI.contains(PAGINA_LOGIN) || requestURI.isEmpty());
     }
@@ -80,14 +111,16 @@ public class ForzarLoginFilter implements Filter{
         return (!requestURI.contains(PAGINA_LOGIN));
     }
 
+    private boolean esPaginaPdf(HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        return (requestURI.contains("compraPdf"));
+    }
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-    
     }
 
     @Override
     public void destroy() {
-   
     }
-    
 }

@@ -23,7 +23,7 @@ public class ColaManager {
     @Resource(lookup ="jms/colaPagosFactory")
     private ConnectionFactory connectionFactory;
     
-    @Resource(lookup = "jms/colaPagos")
+    @Resource(lookup = "colaPagos")
     private Queue queue;
     
     public void sendMessage(String listaOfertas){

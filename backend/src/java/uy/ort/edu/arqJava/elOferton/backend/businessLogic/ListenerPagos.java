@@ -24,7 +24,7 @@ import uy.ort.edu.arqJava.elOferton.backend.dataAccess.ICompraDAO;
 @MessageDriven(activationConfig = {
     @ActivationConfigProperty(propertyName =
             "destinationLookup",
-            propertyValue = "jms/colaPagos"),
+            propertyValue = "colaPagos"),
     @ActivationConfigProperty(propertyName =
             "destinationType",
             propertyValue = "javax.jms.Queue")})

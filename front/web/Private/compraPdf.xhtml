@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Compra </title>
+
+    </h:head>
+    <h:body>
+        <div>
+            <h:form>
+                <h:messages />
+                <h1 style="text-align:center">El Oferton</h1>
+                <h2>Compra</h2>
+                <p:panel style="padding-left: 10px">
+
+
+                    <h2>UUID: #{pdfCompras.compra.identificador}</h2>
+                    <h3>Registrada: <h:outputText value="#{pdfCompras.compra.fecha}">
+                            <f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+                        </h:outputText></h3>
+                    <h3>Estado: #{pdfCompras.compra.status}</h3>
+                                <h2>Oferta</h2>
+                                <p:panel style="padding-left:  10px; margin-left: auto;  margin-right: auto;">  
+                                    <h3><h:outputText value="#{pdfCompras.compra.oferta.nombre}" /></h3>
+                                    <p style="text-align: left;"><h:outputText  value="#{pdfCompras.compra.oferta.descripcion}" /> </p>
+                                    <p><h:outputText value="Precio $#{pdfCompras.compra.oferta.precio}" /></p>
+                                </p:panel>
+
+                                <h2>Empresa</h2>
+                                <p:panel style="padding-left: 10px; margin-left: auto;  margin-right: auto;">
+                                    <h3><h:outputText value="#{pdfCompras.compra.oferta.empresa.nombre}" /></h3>
+                                    <p>Telefono: <h:outputText value="#{pdfCompras.compra.oferta.empresa.telefono}" /></p>
+                                    <p>Direccion: <h:outputText value="#{pdfCompras.compra.oferta.empresa.direccion}" /></p>
+                                    <p>Email: <h:outputText value="#{pdfCompras.compra.oferta.empresa.email}" /></p>
+                                </p:panel>
+                </p:panel>
+            </h:form>
+        </div>
+
+    </h:body>
+</html>
+
