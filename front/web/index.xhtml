@@ -28,7 +28,7 @@
                              <p:outputPanel  rendered="#{not empty nombreUsuario and ofertas.getOfertaComprada(oferta.id)}"> 
                                 <p style="text-align: left; float: left;padding: 3px 23px;" class="alert alert-success comprado#{oferta.id}"> 
                                     Comprado  ✔ 
-                                    <h:link value="Cupon" outcome="Private/compraPdf" >
+                                    <h:link value="Cupon" outcome="Private/compraPdf" target="_blank">
                                         <f:param name="compraId" value="#{ofertas.getIdCompraPorOfertaDeSesion(oferta.id)}" />
                                     </h:link>
                                 </p>

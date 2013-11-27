@@ -173,6 +173,7 @@ public class UsuariosBean {
             HttpSession session = Utils.getSession(true);
             session.setAttribute("nombreUsuario", u.getNombreUsuario());
             session.setAttribute("idUsuario", id);
+            session.setAttribute("usuario", u);
 
             /*Cargo estos parametros para poder saber del lado del cliente si el registro fue exitoso
              * si lo fue hago una redirección al index con en el usuario logueado */

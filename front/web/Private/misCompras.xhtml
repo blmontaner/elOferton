@@ -34,7 +34,7 @@
                         
                         <p:column headerText="Estado">  
                             <p:outputPanel >
-                                <h:link value="#{compra.status}" outcome="compraPdf">
+                                <h:link value="#{compra.status}" outcome="compraPdf" target="_blank">
                                     <f:param name="compraId" value="#{compra.id}" />
                                 </h:link>
                             </p:outputPanel>

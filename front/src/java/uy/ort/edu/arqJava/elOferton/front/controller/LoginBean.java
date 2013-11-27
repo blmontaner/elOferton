@@ -91,6 +91,7 @@ public class LoginBean implements Serializable {
         HttpSession session = Utils.getSession(false);
         session.setAttribute("nombreUsuario", null);
         session.setAttribute("idUsuario", null);
+        session.setAttribute("usuario", null);
         session.invalidate();
         return "/index.xhtml?facesRedirect=true";
     }

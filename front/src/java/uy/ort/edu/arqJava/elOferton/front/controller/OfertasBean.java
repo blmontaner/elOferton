@@ -12,7 +12,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import uy.edu.ort.arqJava.elOferton.businessEntities.Compra;
 import uy.edu.ort.arqJava.elOferton.businessEntities.ListaOfertas;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Oferta;
 import uy.edu.ort.arqJava.elOferton.businessEntities.Usuario;
